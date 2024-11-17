@@ -1,0 +1,185 @@
+const gridElement = document.getElementById('grid');
+const statusElement = document.getElementById('status');
+const timerElement = document.getElementById('timer');
+const gridSize = 10;
+
+let board = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
+let currentPlayer = 'X';
+let timer;
+let timeLeft = 10;
+let gameActive = true;
+
+// Create the 10x10 grid
+function createGrid() {
+  gridElement.innerHTML = '';  // Clear any existing grid
+  for (let i = 0; i < gridSize * gridSize; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('sqr');
+    cell.dataset.index = i;
+    cell.addEventListener('click', handleCellClick);
+    gridElement.appendChild(cell);
+  }
+  updateStatus();
+  startTimer();
+}
+
+// Handle cell click event
+function handleCellClick(event) {
+  if (!gameActive) return;
+
+  const cell = event.target;
+  const index = cell.dataset.index;
+  const row = Math.floor(index / gridSize);
+  const col = index % gridSize;
+
+  // Place the current player's mark and disable the cell
+  if (!board[row][col]) {
+    board[row][col] = currentPlayer;
+    cell.textContent = currentPlayer;
+    cell.classList.add('disabled');
+
+    if (checkWin(row, col)) {
+      endGame(Player ${currentPlayer} wins!);
+    } else if (board.flat().every(cell => cell !== null)) {
+      endGame("It's a tie!");
+    } else {
+      switchPlayer();
+    }
+
+    
+    // Another solutio
+    // const index = squareIndex.dataset.index
+    // const row = Math.floor(index / gridSize)
+    // const col = index % gridSize
+    // if (!board[row][col]) {
+    //     board[row][col] = currentPlayer
+    //     squareIndex.textContent = currentPlayer
+    //     squareIndex.classList.add('disabled')
+
+    //     if (checkForWinner(row, col)) {
+    //         endGame(`Player ${currentPlayer} wins!`)
+    //     } else if (board.flat().every(squareIndex => squareIndex !== null)) {
+    //         endGame("It's a tie!")
+    //     } else {
+    //         switchPlayer()
+    //     }
+    // }
+
+    
+// Switch player and restart timer
+// const switchPlayer = () => {
+//     currentPlayer = currentPlayer === 'X' ? 'O' : 'X'
+//     timeLeft = 10
+//     updateStatus()
+//     startTimer()
+// }
+
+// Start the 5-second timer
+// const startTimer = () => {
+//     clearInterval(timer);
+//     timer = setInterval(() => {
+//       timeLeft--;
+//       timerElement.textContent = `${timeLeft}s`;
+//       if (timeLeft <= 0) {
+//         switchPlayer();
+//       }
+//     }, 1000);
+// }
+
+
+
+// const updateStatus = () => {
+//     messageEl.textContent = `Player ${currentPlayer}'s turn. Time remaining: ${timeLeft}s`;
+// }
+  
+
+//7 Create Reset functionality.
+// const resetFunction = () => document.location.reload()
+
+// ********************************************************************************************
+  }
+}
+
+// Switch player and restart timer
+function switchPlayer() {
+  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+  timeLeft = 10;
+  updateStatus();
+  startTimer();
+}
+
+// Start the 10-second timer
+function startTimer() {
+  clearInterval(timer);
+  timer = setInterval(() => {
+    timeLeft--;
+    timerElement.textContent = ${timeLeft}s;
+    if (timeLeft <= 0) {
+      switchPlayer();
+    }
+  }, 1000);
+}
+
+// Update the status message
+function updateStatus() {
+  statusElement.textContent = Player ${currentPlayer}'s turn. Time remaining: ${timeLeft}s;
+}
+
+// Check win condition for 5 in a row
+function checkWin(row, col) {
+  const directions = [
+    { r: 0, c: 1 },  // Horizontal
+    { r: 1, c: 0 },  // Vertical
+    { r: 1, c: 1 },  // Diagonal down-right
+    { r: 1, c: -1 }  // Diagonal down-left
+  ];
+
+  for (const { r, c } of directions) {
+    let count = 1;
+
+    // Check forward direction
+    for (let i = 1; i < 5; i++) {
+      const newRow = row + i * r;
+      const newCol = col + i * c;
+      if (newRow >= 0 && newRow < gridSize && newCol >= 0 && newCol < gridSize && board[newRow][newCol] === currentPlayer) {
+        count++;
+      } else break;
+    }
+
+    // Check backward direction
+    for (let i = 1; i < 5; i++) {
+      const newRow = row - i * r;
+      const newCol = col - i * c;
+      if (newRow >= 0 && newRow < gridSize && newCol >= 0 && newCol < gridSize && board[newRow][newCol] === currentPlayer) {
+        count++;
+      } else break;
+    }
+
+    if (count >= 5) return true;
+  }
+
+  return false;
+}
+
+// End the game
+function endGame(message) {
+  clearInterval(timer);
+  gameActive = false;
+  statusElement.textContent = message;
+  document.querySelectorAll('.sqr').forEach(cell => cell.classList.add('disabled'));
+}
+
+// Restart the game
+function restartGame() {
+  board = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
+  currentPlayer = 'X';
+  timeLeft = 10;
+  gameActive = true;
+  createGrid();
+}
+
+// Initialize the game
+createGrid();
+
+// Attach restart function to button
+document.getElementById('restart').addEventListener('click', restartGame);
