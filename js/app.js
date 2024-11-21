@@ -201,11 +201,9 @@ squareEls.forEach((square) => {
 resetBtnEl.addEventListener('click', init)
 newGameBtnEl.addEventListener('click', startNewGame)
 
-// Add input event listeners to update player names
 playerXNameEl.addEventListener('input', updatePlayerDisplay)
 playerONameEl.addEventListener('input', updatePlayerDisplay)
 
-// Initialize the game
 init()
 
 // window.onload = init
