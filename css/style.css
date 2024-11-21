@@ -1,31 +1,113 @@
-body {
-    background-color: gainsboro;
-    font-family: system-ui, sans-serif;
+* {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    background-color: #c2daff;
+    min-width: 100dvh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
 }
 
-.board {
-    display: flex;
-    flex-wrap: wrap;
-    width: 325px;
-}
-
-.sqr {
-    width: 30%;
-    aspect-ratio: 1/1;
-    border: 3px solid black;
-    font-size: 64px;
+.container {
     text-align: center;
 }
 
-#reset {
-    width: 100px;
-    height: 30px;
-    background-color: transparent;
-    border: 1px solid gray;
-    margin: 30px;
+h1, .display-Player-name {
+    color: #032f6a;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.display-Player-name {
+    color: #032f6a;
+}
+
+#message {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    height: 2rem;
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: row;
+}
+
+.player-inputs {
+    margin: 16px;
+}
+
+.score {
+    font-size: 1.1rem;
+    margin-top: 5px;
+}
+
+.player-x .score {
+    color: #1a73e8;
+}
+
+.player-o .score {
+    color: #e82b1a;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 2rem;
+    width: 300px;
+    height: 300px;
+}
+
+.sqr {
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.sqr:hover {
+    background-color: #f8f9fa;
+}
+
+.sqr.winner {
+    background-color: #A5D6A7;
+}
+
+.sqr.invalid {
+    border-color: #F44336;
+}
+
+button, input {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+input {
+    background-color:#fff9f9;
+    color: black;
+    cursor:text;
+}
+
+button:hover {
+    background-color: #032f6a;
 }
