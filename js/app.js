@@ -15,8 +15,8 @@ let playerOScore = 0
 /*------------------------ Cached Element References ------------------------*/
 const squareEls = document.querySelectorAll('.sqr')
 const messageEl = document.getElementById('message')
-const resetBtnEl = document.getElementById('reset')
-const newGameBtnEl = document.getElementById('newGame')
+const resetBtnEl = document.getElementById('resetBtn')
+const newGameBtnEl = document.getElementById('newGameBtn')
 const playerXNameEl = document.getElementById('playerXName')
 const playerONameEl = document.getElementById('playerOName')
 const playerXScoreEl = document.getElementById('playerXScore')
@@ -92,7 +92,6 @@ const updateBoard = () => {
     })  
 }
 
-
 const updateScores = () => {
     playerXScoreEl.textContent = playerXScore
     playerOScoreEl.textContent = playerOScore
@@ -144,7 +143,6 @@ const handleClick = (event) => {
 
     placePiece(squareEls)
     checkForWinner()
-    checkForWinner()
     if (!winner) {
         checkForTie()
     }
@@ -155,7 +153,6 @@ const handleClick = (event) => {
     }
     render()
 }
-
 
 const placePiece = (index) => {
     board[index] = currentPlayer
@@ -185,11 +182,11 @@ const checkForTie = () => {
 }
 
 const switchPlayerTurn = () => {
-        if (currentPlayer === playerX) {
-            currentPlayer = playerO
-        } else {
-            currentPlayer = playerX
-        }
+    if (currentPlayer === playerX) {
+        currentPlayer = playerO
+    } else {
+        currentPlayer = playerX
+    }
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
